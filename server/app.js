@@ -11,6 +11,13 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
+app.post('/saved', (req, res) => {
+  //const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+  //console.log("Got post request from ")
+  res.end();
+  //res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+});
+
 // Always return the main index.html, so react-router render the route in the client
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
