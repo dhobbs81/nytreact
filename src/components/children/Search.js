@@ -34,7 +34,7 @@ var Search = React.createClass({
             const docs = body.response.docs;
             const headlines = [];
             docs.forEach( (doc) => {
-                console.log(JSON.stringify(doc.headline.main, null, 2));
+                //console.log(JSON.stringify(doc.headline.main, null, 2));
                 headlines.push(doc.headline.main);
             })
             component.setState({ searchResults: headlines });
@@ -43,6 +43,18 @@ var Search = React.createClass({
     },
 
     componentDidUpdate: function(prevProps, prevState) {
+        if (prevState.searchResults === this.state.searchResults) {
+            console.log("searchResults didn't change");
+            return;
+        }
+
+        if (this.state.searchResults.length == 0) {
+            console.log("searchResults is empty");
+            return;
+        }
+
+        console.log(JSON.stringify(this.state.searchResults));
+
         const appUrl = "https://damp-citadel-98677.herokuapp.com/saved";
         request({
             url: appUrl,
