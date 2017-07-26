@@ -18,10 +18,13 @@ app.use(bodyParser.json());
 app.post('/saved', (req, res) => {
   //const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
   //console.log("Got post request from ")
-  console.log("GOT POST REQUEST!!!!");
-  console.log(JSON.stringify(req.body));
-  res.end();
-  //res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+  var results = JSON.parse(req.body.results);
+
+  for (var i = 0; i < results.length; i++) {
+    console.log(results[i]);
+  }
+
+  res.send(JSON.stringify(results));
 });
 
 // Always return the main index.html, so react-router render the route in the client

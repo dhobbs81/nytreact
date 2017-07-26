@@ -2,7 +2,7 @@
 'use strict';
 
 const app = require('./app');
-const mongoose = require('./db');
+//const mongoose = require('./db');
 
 const PORT = process.env.PORT || 9000;
 

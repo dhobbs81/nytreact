@@ -55,15 +55,21 @@ var Search = React.createClass({
 
         console.log(JSON.stringify(this.state.searchResults));
 
-        const appUrl = "https://damp-citadel-98677.herokuapp.com/saved";
+        //const appUrl = "https://damp-citadel-98677.herokuapp.com/saved";
+        const appUrl = "http://localhost:9000/saved";
         request({
             url: appUrl,
             method: "POST",
+            json: {
+                "results" : JSON.stringify(this.state.searchResults)
+            }
+            /*
             json: true,
             headers: {
-                "content-type": "application/json",
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify(this.state.searchResults)
+            body: { JSON.stringify(this.state.searchResults) }
+            */
         },
         function(err, response, body) {
             console.log(err);
