@@ -32,12 +32,15 @@ var Search = React.createClass({
         function(err, response, body) {
             body = JSON.parse(body);
             const docs = body.response.docs;
-            const headlines = [];
+            const articles = [];
             docs.forEach( (doc) => {
-                //console.log(JSON.stringify(doc.headline.main, null, 2));
-                headlines.push(doc.headline.main);
-            })
-            component.setState({ searchResults: headlines });
+                articles.push({
+                    title: doc.headline.main,
+                    date: doc.pub_date,
+                    url: doc.web_url
+                });
+            });
+            component.setState({ searchResults: articles });
         });
         event.preventDefault();
     },
@@ -55,21 +58,15 @@ var Search = React.createClass({
 
         console.log(JSON.stringify(this.state.searchResults));
 
-        //const appUrl = "https://damp-citadel-98677.herokuapp.com/saved";
-        const appUrl = "http://localhost:9000/saved";
+        const appUrl = "https://damp-citadel-98677.herokuapp.com/saved";
+        //const appUrl = "http://localhost:9000/saved";
+
         request({
             url: appUrl,
             method: "POST",
             json: {
                 "results" : JSON.stringify(this.state.searchResults)
             }
-            /*
-            json: true,
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: { JSON.stringify(this.state.searchResults) }
-            */
         },
         function(err, response, body) {
             console.log(err);
@@ -91,6 +88,7 @@ var Search = React.createClass({
     },
 
     getHeadlines: function() {
+        console.log("Num search results: " + this.state.searchResults.length);
         const listItems = this.state.searchResults.map((result) =>
             <li className="list-group-item" key={result.toString()}>
                 {JSON.stringify(result, null, 2)}
